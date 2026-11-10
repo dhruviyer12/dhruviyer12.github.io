@@ -170,6 +170,48 @@ button.copy {
 .note { border-left: 2px solid var(--accent); padding: 4px 0 4px 12px; font-size: 0.92rem; color: var(--ink-2); }
 .note b { color: var(--ink); font-weight: 600; }
 
+/* Figures + viewer */
+.wide .sheet-body > .gallery { grid-column: 1 / -1; }
+.gallery { display: grid; gap: 12px; min-width: 0; }
+.gallery .gh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.thumbs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.thumbs.one { grid-template-columns: 1fr; }
+.figbtn {
+  display: grid; gap: 6px; padding: 0; margin: 0; border: 1px solid var(--rule); background: var(--sheet);
+  color: var(--ink); text-align: left; cursor: zoom-in; font: inherit; min-width: 0;
+}
+.figbtn:hover { border-color: var(--ink); }
+.figbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.figbtn img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #fff; border-bottom: 1px solid var(--rule); }
+.thumbs.one .figbtn img { aspect-ratio: 2.6 / 1; }
+.figbtn .cap { padding: 2px 10px 9px; display: grid; gap: 2px; font-size: 0.85rem; color: var(--ink-2); }
+.figbtn .cap b { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); }
+.pdflink { font: 500 0.72rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.viewer {
+  position: fixed; inset: 0; z-index: 50; background: rgba(10, 14, 20, 0.92); display: grid;
+  grid-template-rows: auto 1fr; color: #E6EBF0;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.viewer .vbar {
+  display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.viewer .vtitle { font-size: 0.95rem; min-width: 0; }
+.viewer .vbtns { display: flex; gap: 8px; }
+.viewer button {
+  font: 500 0.72rem "IBM Plex Mono", ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.08em;
+  background: transparent; color: #E6EBF0; border: 1px solid rgba(255, 255, 255, 0.5); padding: 6px 12px; cursor: pointer;
+}
+.viewer button:hover { background: rgba(255, 255, 255, 0.12); }
+.viewer .vscroll { overflow: auto; display: grid; place-items: center; padding: 16px; min-height: 0; }
+.viewer img { display: block; background: #fff; max-width: 100%; max-height: calc(100vh - 110px); width: auto; height: auto; }
+.viewer.full .vscroll { place-items: start; }
+.viewer.full img { max-width: none; max-height: none; }
+@media (max-width: 520px) { .thumbs { grid-template-columns: 1fr; } }
+
 /* Sheet title block */
 .tblock { display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr; border-top: 1.5px solid var(--ink); }
 .tblock > div { padding: 8px 12px; border-right: 1px solid var(--rule); display: grid; gap: 2px; min-width: 0; }
@@ -285,6 +327,36 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
             </div>
             <div class="tools"><span>Wiring schematics</span><span>System documentation</span><span>Reverse engineering</span><span>Medical robotics</span></div>
           </div>
+          <div class="gallery">
+            <div class="gh">
+              <span class="label">System I/O wiring diagram · select a view to zoom</span>
+              <a class="pdflink" href="images/Heartlander_I_O_Diagram.pdf" target="_blank" rel="noopener">Full PDF</a>
+            </div>
+            <div class="thumbs one">
+              <button class="figbtn" type="button" id="fig-io-overview" data-full="images/hl_io_overview.png">
+                <img src="images/hl_io_overview.png" alt="Heartlander I/O diagram overview showing Unit 1 and Unit 2 linked by a DB25 cable" loading="lazy">
+                <span class="cap"><b>Overview</b>Two enclosures: Unit 1 handles data acquisition and power, Unit 2 handles suction and motion. A DB25 cable and a shared power feed link them.</span>
+              </button>
+            </div>
+            <div class="thumbs">
+              <button class="figbtn" type="button" id="fig-io-u1daq" data-full="images/hl_io_unit1_daq.png">
+                <img src="images/hl_io_unit1_daq.png" alt="Unit 1 data acquisition board, D-Link USB hub and INSP, EXP and EKG inputs" loading="lazy">
+                <span class="cap"><b>Unit 1 · Data acquisition</b>DAQ board and terminal block with its analog channels, the INSP, EXP and EKG inputs, and the USB hub.</span>
+              </button>
+              <button class="figbtn" type="button" id="fig-io-u1pwr" data-full="images/hl_io_unit1_power.png">
+                <img src="images/hl_io_unit1_power.png" alt="Unit 1 power path from the Belkin supply through the on/off switch to the PowerONE and MeanWell supplies and the DB25 out" loading="lazy">
+                <span class="cap"><b>Unit 1 · Power and distribution</b>Belkin supply and on/off switch feeding the PowerONE and MeanWell supplies, then the 24-way switch block to the DB25 out.</span>
+              </button>
+              <button class="figbtn" type="button" id="fig-io-u2pn" data-full="images/hl_io_unit2_pneumatics.png">
+                <img src="images/hl_io_unit2_pneumatics.png" alt="Unit 2 DB25 in, switch block, two transducers and two suction controllers on the air lines" loading="lazy">
+                <span class="cap"><b>Unit 2 · Suction</b>DB25 in and switch block driving two transducers and two suction controllers on the air lines.</span>
+              </button>
+              <button class="figbtn" type="button" id="fig-io-u2mo" data-full="images/hl_io_unit2_motion.png">
+                <img src="images/hl_io_unit2_motion.png" alt="Unit 2 Geckodrive stepper drivers, steppers with load cells, Opto 22 module and pneumatic valves" loading="lazy">
+                <span class="cap"><b>Unit 2 · Motion and valves</b>Two Geckodrive stepper drivers with 3570 Ω current-set resistors, steppers with load cells, the Opto 22 module and two pneumatic valves.</span>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="tblock">
           <div><span class="label">Dwg no.</span><span class="v">DI-001</span></div>
@@ -306,7 +378,19 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
             <li>Rebuilding and modernizing the Doppler-based vessel sensing electronics.</li>
             <li>Miniaturizing the board so it fits the robot's new modular architecture.</li>
           </ul>
-          <div class="fig"><span class="mono">Fig. 1 · Board layout or 3D render</span></div>
+          <div class="gallery">
+            <span class="label">Rev A · select a view to zoom</span>
+            <div class="thumbs">
+              <button class="figbtn" type="button" id="fig-dop-sch" data-full="images/doppler_schematic.png">
+                <img src="images/doppler_schematic.png" alt="Doppler sensor schematic laid out as oscillator, transmit, probe, receive, phase detector, filter, volume, audio amplifier and speaker blocks" loading="lazy">
+                <span class="cap"><b>Schematic</b>20 MHz oscillator, RF transmit and receive amplifiers, mixer, baseband filter and LM386 audio stage.</span>
+              </button>
+              <button class="figbtn" type="button" id="fig-dop-pcb" data-full="images/doppler_pcb_top.png">
+                <img src="images/doppler_pcb_top.png" alt="Top copper and silkscreen of the 110 by 80 mm two-layer Doppler board" loading="lazy">
+                <span class="cap"><b>PCB top</b>110 × 80 mm, 2 layers, edge-mount SMA connectors for the probe and a ground plane on the bottom layer.</span>
+              </button>
+            </div>
+          </div>
           <div class="tools"><span>PCB design</span><span>KiCad</span><span>Analog signal chain</span><span>Doppler sensing</span></div>
         </div>
         <div class="tblock">
@@ -536,7 +620,49 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
   </footer>
 </div>
 
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+  <div class="vbar">
+    <span class="vtitle" id="viewer-title"></span>
+    <div class="vbtns">
+      <button type="button" id="viewer-size">Actual size</button>
+      <button type="button" id="viewer-close">Close</button>
+    </div>
+  </div>
+  <div class="vscroll" id="viewer-scroll"><img id="viewer-img" alt=""></div>
+</div>
+
 <script>
+(function () {
+  var viewer = document.getElementById('viewer');
+  var vimg = document.getElementById('viewer-img');
+  var vtitle = document.getElementById('viewer-title');
+  var vsize = document.getElementById('viewer-size');
+  var lastBtn = null;
+  function closeViewer() {
+    viewer.hidden = true; viewer.classList.remove('full'); vsize.textContent = 'Actual size';
+    document.body.style.overflow = '';
+    if (lastBtn) lastBtn.focus();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.figbtn'), function (b) {
+    b.addEventListener('click', function () {
+      lastBtn = b;
+      var im = b.querySelector('img');
+      vimg.src = b.getAttribute('data-full');
+      vimg.alt = im.alt;
+      vtitle.textContent = b.querySelector('.cap b').textContent;
+      viewer.hidden = false;
+      document.body.style.overflow = 'hidden';
+      vsize.focus();
+    });
+  });
+  vsize.addEventListener('click', function () {
+    var full = viewer.classList.toggle('full');
+    vsize.textContent = full ? 'Fit to screen' : 'Actual size';
+  });
+  document.getElementById('viewer-close').addEventListener('click', closeViewer);
+  viewer.addEventListener('click', function (e) { if (e.target === viewer || e.target.id === 'viewer-scroll') closeViewer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !viewer.hidden) closeViewer(); });
+})();
 (function () {
   var sheets = Array.prototype.slice.call(document.querySelectorAll('#sheets .sheet'));
   var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
