@@ -212,6 +212,10 @@ button.copy {
 .viewer.full img { max-width: none; max-height: none; }
 @media (max-width: 520px) { .thumbs { grid-template-columns: 1fr; } }
 
+.thumbs.stack { grid-template-columns: 1fr; gap: 14px; }
+.thumbs.stack .figbtn img { aspect-ratio: auto; max-height: 360px; padding: 8px; }
+.thumbs.stack .figbtn .cap { font-size: 0.92rem; line-height: 1.55; gap: 4px; padding: 4px 12px 12px; }
+
 /* Sheet title block */
 .tblock { display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr; border-top: 1.5px solid var(--ink); }
 .tblock > div { padding: 8px 12px; border-right: 1px solid var(--rule); display: grid; gap: 2px; min-width: 0; }
@@ -484,6 +488,19 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
           <div class="dims" aria-label="Key figures">
             <div class="dim"><span class="num">$10K</span><span class="label">MIT grant</span></div>
             <div class="dim"><span class="num">Patent</span><span class="label">Pending</span></div>
+          </div>
+          <div class="gallery">
+            <span class="label">Receiver casing · CAD iterations · select a view to zoom</span>
+            <div class="thumbs stack">
+              <button class="figbtn" type="button" id="fig-ivt-v1" data-full="images/inventeams_receiver_v1.png">
+                <img src="images/inventeams_receiver_v1.png" alt="CAD render of the first receiver casing, a large open enclosure with internal walls" loading="lazy">
+                <span class="cap"><b>V1 · First enclosure</b>A general-purpose casing: one large open shell sized to hold every electronic component in the receiver. It proved that all the parts would fit, but it wasn't optimized for size, and it didn't account for how anyone would reach the electronics, charge the device or route its connections once it was assembled.</span>
+              </button>
+              <button class="figbtn" type="button" id="fig-ivt-v2" data-full="images/inventeams_receiver_v2.png">
+                <img src="images/inventeams_receiver_v2.png" alt="CAD render of the second receiver casing, a compact rounded enclosure with ports and slots, shown beside two cylindrical components" loading="lazy">
+                <span class="cap"><b>V2 · Optimized and accessible</b>A redesign built around the actual components, so the interior space is used far more efficiently and the case is smaller. It adds dedicated ports and slots: openings to reach the electronic components, a charging port, and clear paths for the connections between parts, so the device can be charged and serviced without fighting the enclosure.</span>
+              </button>
+            </div>
           </div>
           <div class="tools"><span>Onshape</span><span>KiCad</span><span>Product design</span><span>Prototyping</span></div>
         </div>
