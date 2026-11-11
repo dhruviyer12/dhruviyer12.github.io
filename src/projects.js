@@ -165,6 +165,7 @@ export const projects = [
     period: 'Jul 2026 to present',
     role: 'Solo developer',
     cardText: 'A Swift planner that runs Llama 3.2 1B on-device, with natural-language task capture.',
+    cardImage: '/images/almanac_mockup.jpg',
     summary: 'A planner and task manager written in Swift that runs Llama 3.2 1B fully on-device through llama.cpp, so nothing leaves the Mac.',
     bullets: [
       'Natural-language task capture that turns free-form input into structured calendar events.',
@@ -173,6 +174,13 @@ export const projects = [
     ],
     figures: [],
     tools: ['Swift', 'SwiftUI', 'llama.cpp', 'SwiftData', 'EventKit'],
+    gallery: {
+      title: 'Mac and iPad',
+      images: [
+        { src: '/images/almanac_mockup.jpg', label: 'Overview', alt: 'Almanac on a MacBook showing the Today view, with an iPad showing a focus timer',
+          caption: 'The Today view on Mac puts the next event, the day’s lineup, open tasks and streaks on one screen. On iPad, Focus mode runs a session timer next to the task being worked on.' },
+      ],
+    },
   },
   {
     slug: 'modernbert',
