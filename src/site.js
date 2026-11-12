@@ -2,8 +2,8 @@
 
 export const profile = {
   name: 'Dhruv Iyer',
-  study: 'Mechanical and Electrical Engineering · Carnegie Mellon University',
-  pitch: 'I design and build robots, circuit boards and precision parts, and I train and evaluate language models. My work sits where embedded hardware meets LLM research.',
+  study: 'Mechanical Engineering, Electrical & Computer Engineering · Carnegie Mellon University',
+  pitch: 'My work mainly sits at the intersection of electrical and mechanical hardware and physical AI. Check out some of the cool things I have done!',
   facts: ['B.S., May 2029', 'Seeking Summer 2027 internships in EE, ME, robotics and physical AI'],
   email: 'dviyer@andrew.cmu.edu',
   links: [
